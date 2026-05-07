@@ -1,20 +1,11 @@
-import { products } from "../route";
+import { NextResponse } from 'next/server';
 
 export async function GET(request, { params }) {
-  const product = products.find(
-    (p) => p.id === Number(params.id)
-  );
+  const products = [{ id: "1", title: "iPhone 15" }, { id: "2", title: "iPad Pro" }];
+  const product = products.find(p => p.id === params.id);
 
   if (!product) {
-    return Response.json(
-      {
-        error: {
-          message: "Product not found",
-        },
-      },
-      { status: 404 }
-    );
+    return NextResponse.json({ error: { message: "Олдсонгүй" } }, { status: 404 });
   }
-
-  return Response.json(product);
+  return NextResponse.json(product);
 }

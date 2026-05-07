@@ -1,59 +1,35 @@
+import { NextResponse } from 'next/server';
+
 let products = [
-  {
-    id: 1,
-    title: "iPhone 15",
-    price: 4500000,
-    description: "Apple phone",
-  },
-  {
-    id: 2,
-    title: "RTX 4070",
-    price: 3200000,
-    description: "Gaming GPU",
-  },
+  { id: "1", title: "iPhone 15", price: 3500000 },
+  { id: "2", title: "iPad Pro", price: 4200000 }
 ];
 
 export async function GET() {
-  return Response.json(products);
+  return NextResponse.json(products);
 }
 
 export async function POST(request) {
   try {
-    const body = await request.json();
-
-    if (!body.title || !body.price) {
-      return Response.json(
-        {
-          error: {
-            message: "Title and price required",
-          },
-        },
-        { status: 400 }
-      );
+    const data = await request.json();
+    
+    if (!data.title || !data.price) {
+      return NextResponse.json({ error: { message: "Мэдээлэл дутуу байна!" } }, { status: 400 });
     }
 
-    const newProduct = {
-      id: Date.now(),
-      title: body.title,
-      price: Number(body.price),
-      description: body.description || "",
+    const nextId = products.length > 0 
+      ? Math.max(...products.map(p => Number(p.id))) + 1 
+      : 1;
+
+    const newProduct = { 
+      id: nextId.toString(), 
+      title: data.title, 
+      price: data.price 
     };
 
     products.push(newProduct);
-
-    return Response.json(newProduct, {
-      status: 201,
-    });
-  } catch (error) {
-    return Response.json(
-      {
-        error: {
-          message: "Invalid JSON",
-        },
-      },
-      { status: 500 }
-    );
+    return NextResponse.json(newProduct, { status: 201 });
+  } catch (err) {
+    return NextResponse.json({ error: { message: "Серверийн алдаа" } }, { status: 500 });
   }
 }
-
-export { products };
