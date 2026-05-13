@@ -15,7 +15,7 @@ export default async function AdminPage() {
   let fetchError = false;
 
   try {
-    const res = await fetch(`${baseUrl}/api/products`, { cache: "no-store" });
+    const res = await fetch($`{baseUrl}/api/products`, { cache: "no-store" });
     if (!res.ok) throw new Error("Failed to fetch");
     products = await res.json();
     productCount = products.length;
