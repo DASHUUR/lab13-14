@@ -20,7 +20,7 @@ export default async function ProductDetailPage({ params }) {
 
       <div className="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm">
         <p className="text-slate-500 font-bold uppercase tracking-widest text-xs mb-2">
-          Сонгосон бүтээгдэхүүн: {product.title}
+          Сонгосон бүтэгдэхүүн: {product.title}
         </p>
         
         <div className="text-4xl font-mono font-black text-blue-600">
