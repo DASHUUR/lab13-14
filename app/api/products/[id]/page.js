@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 export default async function ProductDetailPage({ params }) {
   const { id } = params;
 
-  const res = await fetch('https://lab13-14.vercel.app/products', {
+  const res = await fetch('http://localhost:3000/api/products', {
     cache: 'no-store',
   });
 
