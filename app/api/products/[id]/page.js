@@ -4,12 +4,8 @@ import { notFound } from 'next/navigation';
 export default async function ProductDetailPage({ params }) {
   const { id } = await params;
 
-const res = await fetch(
-  "https://lab13-14-5jhn4rlpy-dashuurs-projects.vercel.app/api/product",
-  {
-    cache: "no-store",
-  }
-);  const products = await res.json();
+  const res = await fetch(https://vercel.app, { cache: 'no-store' });
+  const products = await res.json();
   const product = products.find(p => p.id === id);
 
   if (!product) {
