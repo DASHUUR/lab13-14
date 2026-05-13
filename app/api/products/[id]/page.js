@@ -2,11 +2,19 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 export default async function ProductDetailPage({ params }) {
-  const { id } = await params;
+  const { id } = params;
 
-  const res = await fetch(`https://lab13-14.vercel.app/products`, { cache: 'no-store' });
+  const res = await fetch('https://lab13-14.vercel.app/products', {
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch products');
+  }
+
   const products = await res.json();
-  const product = products.find(p => p.id === id);
+
+  const product = products.find(p => String(p.id) === id);
 
   if (!product) {
     notFound();
@@ -22,27 +30,22 @@ export default async function ProductDetailPage({ params }) {
         <p className="text-slate-500 font-bold uppercase tracking-widest text-xs mb-2">
           Сонгосон бүтэгдэхүүн: {product.title}
         </p>
-        
+
         <div className="text-4xl font-mono font-black text-blue-600">
           {product.title} ({id})
         </div>
-        
+
         <p className="mt-2 text-2xl font-bold text-green-600">
           Үнэ: {Number(product.price).toLocaleString()}₮
         </p>
       </div>
 
-      {/* Буцах товч */}
-      <Link 
-        href="/products" 
+      <Link
+        href="/products"
         className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 font-bold transition-colors"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        Жагсаалт руу буцах
+        Буцах
       </Link>
     </div>
   );
 }
-vercel.app
